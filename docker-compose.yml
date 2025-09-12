@@ -1,0 +1,29 @@
+name: Sonarr
+
+services:
+  sonarr:
+    image: ghcr.io/hotio/sonarr:release-${SONARR_VERSION}
+    container_name: sonarr
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - sonar_config:/config:rw
+      - ~/Videos/series:/series:rw
+      - ~/Downloads:/downloads:rw
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - "127.0.0.1:8989:8989"
+    networks:
+      - nginx-proxy-manager_frontend
+    restart: unless-stopped
+    labels:
+      - wud.tag.include=^release-\d+\.\d+\.\d+.\d+$$
+
+networks:
+  nginx-proxy-manager_frontend:
+    driver: bridge
+    external: true
+
+volumes:
+  sonar_config:

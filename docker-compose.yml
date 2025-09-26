@@ -15,12 +15,18 @@ services:
     ports:
       - "127.0.0.1:8989:8989"
     networks:
+      - backend
       - nginx-proxy-manager_frontend
     restart: unless-stopped
     labels:
       - wud.tag.include=^release-\d+\.\d+\.\d+.\d+$$
+      - traefik.enable=true
+      - traefik.http.routers.sonarr-sonarr.rule=Host(`sonarr.dhjensen.tech`)
 
 networks:
+  backend:
+    external: true
+    driver: bridge
   nginx-proxy-manager_frontend:
     driver: bridge
     external: true

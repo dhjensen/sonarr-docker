@@ -6,7 +6,7 @@ services:
     container_name: sonarr
     volumes:
       - sonar_config:/config:rw
-      - ~/Videos/series:/series:rw
+      - /mnt/media/series:/series:rw
       - ~/Downloads:/data/downloads:rw
     environment:
       - PUID=1000
